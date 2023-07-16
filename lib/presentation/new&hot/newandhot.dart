@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:netflix/core/colors/colors.dart';
+import 'package:netflix/domain/Model/download_model/upcoming_model.dart';
+import 'package:netflix/domain/functions/function.dart';
 import 'package:netflix/presentation/new&hot/widgets/comingsoonwidget.dart';
 import 'package:netflix/presentation/new&hot/widgets/everyoneswhatchingwidget.dart';
 import '../../core/constants.dart';
@@ -62,7 +64,19 @@ Widget _builComingsoon() {
   return ListView.builder(
     itemCount: 10,
     itemBuilder: (context, index) {
-      return const ComingSoonWidget();
+      return FutureBuilder<UpcomingMovieModel?>(
+        future: upcomingMovieList(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(child: CircularProgressIndicator());
+          }else if(snapshot.hasData){
+           return  ComingSoonWidget(movieData: snapshot.data!.results[index],);
+           }else{
+             return Text("Something Went Wrong");
+          }
+          
+        }
+      );
     },
   );
 }
@@ -70,5 +84,19 @@ Widget _builComingsoon() {
 Widget _buildEveryonsWhatching() {
   return ListView.builder(
       itemCount: 10,
-      itemBuilder: (context, index) => const EveryOnesWhatchingwidget());
+      itemBuilder: (context, index) {
+        return FutureBuilder<UpcomingMovieModel?>(
+        future: upcomingMovieList(),
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return Center(child: CircularProgressIndicator());
+          }else if(snapshot.hasData){
+           return  EveryOnesWhatchingwidget(movieData: snapshot.data!.results[index + 9]);
+           }else{
+             return Text("Something Went Wrong");
+          }
+          
+        }
+      );
+      });
 }

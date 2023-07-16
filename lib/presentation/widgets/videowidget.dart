@@ -15,7 +15,7 @@ class VideoCardWidget extends StatelessWidget {
         SizedBox(
           height: 200,
           width: double.infinity,
-          child: Image.asset(
+          child: Image.network(
             image,
             fit: BoxFit.cover,
           ),

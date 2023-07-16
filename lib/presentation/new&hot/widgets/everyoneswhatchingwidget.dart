@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:netflix/core/colors/colors.dart';
 import 'package:netflix/core/constants.dart';
+import 'package:netflix/domain/Model/download_model/upcoming_model.dart';
+
 import 'package:netflix/presentation/home/widgets/buttonWidget.dart';
 import 'package:netflix/presentation/widgets/videowidget.dart';
 
 class EveryOnesWhatchingwidget extends StatelessWidget {
-  const EveryOnesWhatchingwidget({
+   EveryOnesWhatchingwidget({
     super.key,
+    required this.movieData
   });
-
+  Result movieData;
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -17,17 +20,17 @@ class EveryOnesWhatchingwidget extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           kheigth,
-          const Text(
-            'The Last of Us',
+           Text(
+            movieData.title,
             style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
           ),
           kheigth,
-          const Text(
-            'Twenty years after modern civilization has been destroyed, Joel, a hardened survivor, is hired to smuggle Ellie, a 14-year-old girl, out of an oppressive quarantine zone. What starts as a small job soon becomes a brutal, heartbreaking journey, as they both must traverse the United States and depend on each other for survival.s',
+           Text(
+            movieData.overview,
             style: TextStyle(color: kgreycolor),
           ),
           kheight50,
-          const VideoCardWidget(image: 'assets/images/last-of-us.jpg'),
+           VideoCardWidget(image:'https://image.tmdb.org/t/p/w200${movieData.posterPath}'),
           Row(
             mainAxisAlignment: MainAxisAlignment.end,
             children: const [
