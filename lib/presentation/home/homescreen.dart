@@ -39,9 +39,9 @@ class HomeScreen extends StatelessWidget {
                   kheigth,
                   NumberTitleCard(),
                   kheigth,
-                  MainTitleCard(title: 'Tense Drama'),
+                  MainTitleCard(title: 'Tense Drama',movieFunction: movieList("https://api.themoviedb.org/3/discover/tv?api_key=71fff30d09043e770f48f737f18cee2f") ),
                   kheigth,
-                  MainTitleCard(title: 'South Indian Cinema'),
+                  MainTitleCard(title: 'South Indian Cinema',movieFunction: movieList("https://api.themoviedb.org/3/movie/popular?api_key=71fff30d09043e770f48f737f18cee2f"),),
                 ],
               ),
               scrollnotifier.value == true
