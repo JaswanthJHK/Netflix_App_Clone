@@ -1,16 +1,39 @@
 import 'package:flutter/material.dart';
 import 'package:netflix/core/colors/colors.dart';
+import 'package:video_player/video_player.dart';
 
-class VideoListItems extends StatelessWidget {
+class VideoListItems extends StatefulWidget {
   final int index;
-  const VideoListItems({super.key, required this.index});
+  VideoPlayerController controller;
+  String videoPath;
+  VideoListItems(
+      {super.key,
+      required this.index,
+      required this.controller,
+      required this.videoPath});
 
+  @override
+  State<VideoListItems> createState() => _VideoListItemsState();
+}
+
+class _VideoListItemsState extends State<VideoListItems> {
   @override
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        Container(
-          color: Colors.accents[index % Colors.accents.length],
+        SizedBox(
+          height: double.infinity,
+          width: double.infinity,
+          child: AspectRatio(
+            aspectRatio: widget.controller.value.aspectRatio,
+            child: widget.controller.value.isInitialized
+                ? VideoPlayer(widget.controller)
+                : const Center(
+                    child: CircularProgressIndicator(
+                      color: Colors.red,
+                    ),
+                  ),
+          ),
         ),
         Align(
           alignment: Alignment.bottomCenter,
@@ -30,7 +53,7 @@ class VideoListItems extends StatelessWidget {
                 ),
                 Column(
                   mainAxisAlignment: MainAxisAlignment.end,
-                  children: const [
+                  children: [
                     CircleAvatar(
                       radius: 30,
                       backgroundImage:
@@ -39,7 +62,29 @@ class VideoListItems extends StatelessWidget {
                     VideoActions(icon: Icons.emoji_emotions, title: 'LOL'),
                     VideoActions(icon: Icons.add, title: 'My List'),
                     VideoActions(icon: Icons.share, title: 'Share'),
-                    VideoActions(icon: Icons.play_arrow, title: 'play'),
+                    Column(
+                      children: [
+                        IconButton(
+                          icon: Icon(
+                            widget.controller.value.isPlaying
+                                ? Icons.pause
+                                : Icons.play_arrow,
+                            color: kwhite,
+                          ),
+                          onPressed: () {
+                            setState(() {
+                              widget.controller.value.isPlaying
+                                  ? widget.controller.pause()
+                                  : widget.controller.play();
+                            });
+                          },
+                        ),
+                        const Text(
+                          'Play',
+                          style: TextStyle(fontSize: 14, color: kwhite),
+                        ),
+                      ],
+                    ),
                   ],
                 )
               ],

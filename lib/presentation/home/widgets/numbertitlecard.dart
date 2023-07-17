@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:netflix/core/constants.dart';
+import 'package:netflix/domain/functions/function.dart';
 import 'package:netflix/presentation/home/widgets/numbercard.dart';
 import 'package:netflix/presentation/widgets/maintitlewidget.dart';
 
@@ -18,14 +19,20 @@ class NumberTitleCard extends StatelessWidget {
       kheigth,
       LimitedBox(
         maxHeight: 200,
-        child: ListView(
+        child: FutureBuilder(
+          future: topTen(),
+          builder: (context,snapshot){
+            return ListView(
           scrollDirection: Axis.horizontal,
           children: List.generate(
               10,
-              (index) => NumberCard(
-                    index: index,
+              (index) => NumberCard(  
+                image: 'https://image.tmdb.org/t/p/w200${snapshot.data?[index].posterPath}',
+                      index: index,
                   )),
-        ),
+        );
+
+          })
       )
     ]);
   }

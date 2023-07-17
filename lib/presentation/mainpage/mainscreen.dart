@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:netflix/core/colors/colors.dart';
+import 'package:netflix/presentation/Fast_Laugh/Screen_fast_laugh.dart';
 import 'package:netflix/presentation/download/downloadscreen.dart';
 import 'package:netflix/presentation/fastluagh/fastlaugh.dart';
 import 'package:netflix/presentation/home/homescreen.dart';
@@ -10,12 +11,12 @@ import 'package:netflix/presentation/search/searchscreen.dart';
 class MainScreen extends StatelessWidget {
   MainScreen({super.key});
 
-  final pages = const [
+  final pages = [
     HomeScreen(),
     NewAndHot(),
-    FastLaugh(),
+    ScreenFastLaugh(),
     SearchScreen(),
-    DownloadScreen()
+    DownloadScreen(),
   ];
   @override
   Widget build(BuildContext context) {

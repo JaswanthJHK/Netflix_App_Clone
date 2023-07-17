@@ -48,36 +48,45 @@ class ComingSoonWidget extends StatelessWidget {
             children: [
                VideoCardWidget(image:'https://image.tmdb.org/t/p/w200${movieData.posterPath}'),
               kheigth,
-              Row(
-                children: [
-                  Text(
-                    movieData.title,
+              SizedBox(
+                
+                child: Row(
                   
-                    style: GoogleFonts.itim(
-                        fontSize: 30,
-                        fontWeight: FontWeight.bold,
-                        letterSpacing: -2),
-                  ),
-                  const Spacer(),
-                  Row(
-                    children: const [
-                      MainscreenButtonWidget(
-                        icon: Icons.add_alert_rounded,
-                        title: 'Remaind me',
-                        textsize: 10,
-                        iconsize: 20,
+                  children: [
+                    
+                    SizedBox(
+                      width: 200,
+                      child: Text(
+                        movieData.title,
+                      
+                        style: GoogleFonts.itim(
+                            fontSize: 30,
+                            fontWeight: FontWeight.bold,
+                            letterSpacing: -2),
+                            overflow: TextOverflow.ellipsis,
                       ),
-                      kwidth,
-                      MainscreenButtonWidget(
-                        icon: Icons.info,
-                        title: 'Info',
-                        textsize: 10,
-                        iconsize: 20,
-                      ),
-                      kwidth
-                    ],
-                  )
-                ],
+                    ),
+                    const Spacer(),
+                    Row(
+                      children: const [
+                        MainscreenButtonWidget(
+                          icon: Icons.add_alert_rounded,
+                          title: 'Remaind me',
+                          textsize: 10,
+                          iconsize: 20,
+                        ),
+                        kwidth,
+                        MainscreenButtonWidget(
+                          icon: Icons.info,
+                          title: 'Info',
+                          textsize: 10,
+                          iconsize: 20,
+                        ),
+                        kwidth
+                      ],
+                    )
+                  ],
+                ),
               ),
               kheigth,
               const Text('Coming on Friday'),

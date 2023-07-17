@@ -3,6 +3,8 @@ import 'package:netflix/core/colors/colors.dart';
 import 'package:netflix/core/constants.dart';
 import 'package:netflix/presentation/search/widgets/searchtitle.dart';
 
+import '../../../domain/functions/function.dart';
+
 class SearchIdleWidget extends StatelessWidget {
   const SearchIdleWidget({super.key});
 
@@ -14,11 +16,21 @@ class SearchIdleWidget extends StatelessWidget {
         const SearchTextTitle(title: 'Top Searches'),
         kheigth,
         Expanded(
-          child: ListView.separated(
-              shrinkWrap: true,
-              itemBuilder: (context, index) => TopSearchItemTile(index: index),
-              separatorBuilder: (context, index) => kheigth20,
-              itemCount: 10),
+          child: FutureBuilder(
+            future: getComingSoon(),
+            builder: (context, snapshot) {
+              return  snapshot.hasData ?    ListView.separated(
+                shrinkWrap: true,
+                itemBuilder: (context, index) => TopSearchItemTile(index: index,
+                image:'https://image.tmdb.org/t/p/w200${snapshot.data?[index].backdropPath}' ,
+                name: snapshot.data?[index].title,
+                ),
+                separatorBuilder: (context, index) => kheigth20,
+                itemCount: 10):
+                 Center(child: CircularProgressIndicator());
+            },
+         
+          ),
         ),
       ],
     );
@@ -26,8 +38,10 @@ class SearchIdleWidget extends StatelessWidget {
 }
 
 class TopSearchItemTile extends StatelessWidget {
-  const TopSearchItemTile({super.key, required this.index});
+   TopSearchItemTile({super.key, required this.index,required this.image,required this.name});
   final int index;
+   String image;
+  String name;
 
   @override
   Widget build(BuildContext context) {
@@ -39,12 +53,12 @@ class TopSearchItemTile extends StatelessWidget {
           height: 70,
           decoration: BoxDecoration(
               image: DecorationImage(
-                  image: AssetImage(topsearch[index]), fit: BoxFit.cover)),
+                  image: NetworkImage(image), fit: BoxFit.cover)),
         ),
         kwidth,
-        const Expanded(
+         Expanded(
             child: Text(
-          'Movie Name',
+          name,
           style: TextStyle(
               color: kwhite, fontSize: 16, fontWeight: FontWeight.bold),
         )),
